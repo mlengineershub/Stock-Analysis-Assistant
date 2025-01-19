@@ -5,7 +5,6 @@ setup(
     version='0.1.0',
     packages=find_packages(),
     install_requires=[
-        'sentence-transformers'=='3.3.1',
     ],
     author='AIT SAID Azzedine, DJERFAF Ilyes, KESKES Nazim',
     author_email='ja_aitsaid@esi.dz, ilyes.djerfaf@etu-upsaclay.fr, nazim.keskes@etu-upsaclay.fr',

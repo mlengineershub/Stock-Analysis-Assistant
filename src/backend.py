@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv
+
 import finnhub  # type: ignore
 from langchain_chroma import Chroma
 from langchain_ollama import OllamaEmbeddings
@@ -12,15 +15,15 @@ from typing_extensions import TypedDict
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 
-vectordb = Chroma(persist_directory="data/vdb", embedding_function=OllamaEmbeddings(model="granite-embedding"))
+from langchain_ollama import ChatOllama
+from pydantic import BaseModel, Field
+
+#==========================Retrieval==========================
+vectordb = Chroma(persist_directory="data/vdb",
+                  embedding_function=OllamaEmbeddings(model="granite-embedding"))
 retriever = vectordb.as_retriever()
 
 #==========================Retrieval Grader Agent==========================
-
-from langchain_ollama import ChatOllama
-from langchain_core.prompts import ChatPromptTemplate
-from pydantic import BaseModel, Field
-
 
 # Data model
 class GradeDocuments(BaseModel):
@@ -49,10 +52,12 @@ grade_prompt = ChatPromptTemplate.from_messages(
 )
 
 retrieval_grader = grade_prompt | structured_llm_grader
+
 #==========================Retrieval Generator Agent==========================
+
+
 # Prompt
 prompt = hub.pull("rlm/rag-prompt")
-
 
 
 # Post-processing
@@ -64,7 +69,10 @@ def format_docs(docs):
 retrieval_chain = prompt | llm | StrOutputParser()
 
 #==========================Finance Tool==========================
-FINANCE_API_KEY='cte32t9r01qt478kvedgcte32t9r01qt478kvee0'
+
+load_dotenv(dotenv_path="../.env")
+FINANCE_API_KEY = os.getenv("FINANCE_API_KEY")
+
 # Setup client
 finnhub_client = finnhub.Client(api_key=FINANCE_API_KEY)
 
@@ -213,7 +221,7 @@ def process_query(query: str, debug: bool = False):
         "relevant": False,
         "news": ""
     })
-    
+
     if debug:
         print("=== Debug Information ===")
         print(f"User Question: {query}")
@@ -224,5 +232,5 @@ def process_query(query: str, debug: bool = False):
         print("\nFinal Recommendation:")
         print(result["messages"][-1])
         print("=======================")
-        
+
     return result["messages"][-1]
