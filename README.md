@@ -88,8 +88,8 @@ The application employs an **Agentic RAG** workflow for stock analysis, as outli
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/stock-analysis-assistant.git
-   cd stock-analysis-assistant
+   git clone https://github.com/mlengineershub/Stock-Analysis-Assistant
+   cd Stock-Analysis-Assistant
    ```
 2. Install dependencies:
    ```bash
