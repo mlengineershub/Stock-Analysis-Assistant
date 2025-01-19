@@ -152,12 +152,9 @@ This project is licensed under the MIT License. See the [LICENSE](./LICENSE) fil
 
 ---
 
-## Screenshots
+## Streamlit Application
 
-1. Architecture Diagram
-   ![Architecture](images/architecture_overall.png)
-2. Streamlit Application
-   ![Streamlit](images/app.png)
+![Streamlit](images/app.png)
 
 ---
 
