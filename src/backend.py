@@ -70,8 +70,9 @@ retrieval_chain = prompt | llm | StrOutputParser()
 
 #==========================Finance Tool==========================
 
-load_dotenv(dotenv_path="../.env")
+load_dotenv(dotenv_path=".env")
 FINANCE_API_KEY = os.getenv("FINANCE_API_KEY")
+print(FINANCE_API_KEY)
 
 # Setup client
 finnhub_client = finnhub.Client(api_key=FINANCE_API_KEY)
@@ -207,7 +208,7 @@ graph_builder.add_edge("recommendation", END)
 # Compile graph
 graph = graph_builder.compile()
 
-def process_query(query: str, debug: bool = False):
+def process_query(query: str, debug: bool = True):
     """Process a user query through the graph.
     
     Args:
